@@ -1,71 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Site Under Construction</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Night Owl Media - Under Maintenance</title>
   <style>
-    body {
-      background: #222;
-      color: #fff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at 30% 20%, #2c3e50, #000000);
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-    }
-    .container {
-      background: rgba(34, 34, 34, 0.95);
-      padding: 2.5em 2em 2em 2em;
-      border-radius: 12px;
-      box-shadow: 0 2px 24px rgba(0,0,0,0.4);
       text-align: center;
-      max-width: 360px;
+      overflow: hidden;
     }
-    h1 {
-      font-size: 2.3em;
-      margin: 0 0 0.3em 0;
-      letter-spacing: 1px;
-    }
-    p {
-      font-size: 1.1em;
-      margin: 0 0 1.5em 0;
-      color: #ccc;
-    }
-    .loader {
-      margin: 1.8em auto 0 auto;
-      border: 6px solid #444;
-      border-top: 6px solid #ffbb33;
+
+    .moon {
+      position: absolute;
+      top: 60px;
+      left: 60px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, #fefcd7 20%, #f4e8b4 60%, #bbaa88 100%);
       border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      animation: spin 1s linear infinite;
+      box-shadow: 0 0 40px 15px rgba(255, 255, 200, 0.3);
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
+
+    h1 {
+      font-size: 3rem;
+      color: #e0e0ff;
+      text-shadow: 0 0 15px #aaaaff;
     }
-    @media (max-width: 500px) {
-      .container {
-        max-width: 90vw;
-        padding: 1.5em 1em 1.5em 1em;
-      }
-      h1 {
-        font-size: 1.4em;
-      }
+
+    p {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-top: 20px;
+    }
+
+    .glow {
+      text-shadow: 0 0 10px #9cf, 0 0 20px #6af;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.9rem;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🚧 Under Construction 🚧</h1>
-    <p>We're working hard to launch our new website.<br>
-    Stay tuned!<br>
-    Thank you for your patience.</p>
-    <div class="loader"></div>
-  </div>
+  <div class="moon"></div>
+  <h1 class="glow">Night Owl Media</h1>
+  <p>We're currently working under the moonlight 🌙<br />Our site is under maintenance. We'll be back soon.</p>
+  <footer>&copy; 2025 Night Owl Media</footer>
 </body>
 </html>
