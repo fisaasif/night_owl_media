@@ -19,6 +19,12 @@
       color: #fff;
       text-align: center;
       position: relative;
+      transition: background 1s ease, color 1s ease;
+    }
+
+    body[data-theme="light"] {
+      background: linear-gradient(to top, #ffffff, #cce0ff);
+      color: #222;
     }
 
     .moon {
@@ -31,12 +37,41 @@
       border-radius: 50%;
       box-shadow: 0 0 30px 15px rgba(255, 255, 200, 0.2);
       animation: float 6s ease-in-out infinite;
-      z-index: 1;
+      z-index: 2;
+      cursor: pointer;
+      transition: background 1s ease, box-shadow 1s ease;
+    }
+
+    body[data-theme="light"] .moon {
+      background: radial-gradient(circle, #ffef99, #f9d976);
+      box-shadow: 0 0 30px 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .sun-rays {
+      display: none;
+    }
+
+    body[data-theme="light"] .sun-rays {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 140px;
+      height: 140px;
+      background: conic-gradient(from 0deg, rgba(255, 200, 0, 0.2) 0deg 45deg, transparent 45deg 90deg);
+      border-radius: 50%;
+      animation: spin 10s linear infinite;
+      z-index: -1;
+      display: block;
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .stars {
@@ -57,9 +92,62 @@
       box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
     }
 
+    body[data-theme="light"] .stars {
+      display: none;
+    }
+
     @keyframes twinkle {
       0%, 100% { opacity: 0.2; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .clouds {
+      display: none;
+    }
+
+    body[data-theme="light"] .clouds {
+      display: block;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .cloud {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: floatClouds 60s linear infinite;
+    }
+
+    .cloud::before, .cloud::after {
+      content: "";
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .cloud::before {
+      width: 60%;
+      height: 60%;
+      left: -30%;
+      top: 10%;
+    }
+
+    .cloud::after {
+      width: 60%;
+      height: 60%;
+      left: 50%;
+      top: 10%;
+    }
+
+    @keyframes floatClouds {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(100vw); }
     }
 
     .content {
@@ -71,16 +159,26 @@
       color: #e0e0ff;
       text-shadow: 0 0 15px #aaaaff;
       margin-bottom: 10px;
+      transition: color 1s ease, text-shadow 1s ease;
+    }
+
+    body[data-theme="light"] h1 {
+      color: #222;
+      text-shadow: none;
     }
 
     p {
       font-size: 1.2rem;
       color: #ccc;
+      transition: color 1s ease;
+    }
+
+    body[data-theme="light"] p {
+      color: #333;
     }
 
     .scene {
       position: relative;
-      bottom: 0;
       width: 100%;
       max-width: 500px;
       display: flex;
@@ -110,15 +208,31 @@
     footer {
       position: absolute;
       bottom: 20px;
+      width: 100%;
+      text-align: center;
       font-size: 0.9rem;
       color: #777;
       z-index: 2;
+      transition: color 1s ease;
+    }
+
+    body[data-theme="light"] footer {
+      color: #666;
     }
   </style>
 </head>
-<body>
-  <div class="moon"></div>
+<body data-theme="dark">
+  <div class="moon" id="themeToggle" title="Click to toggle day/night">
+    <div class="sun-rays"></div>
+  </div>
+
   <div class="stars"></div>
+
+  <div class="clouds">
+    <div class="cloud" style="width: 120px; height: 60px; top: 30px; animation-delay: 0s;"></div>
+    <div class="cloud" style="width: 150px; height: 80px; top: 100px; animation-delay: 20s;"></div>
+    <div class="cloud" style="width: 100px; height: 50px; top: 60px; animation-delay: 40s;"></div>
+  </div>
 
   <div class="content">
     <h1>Night Owl Media</h1>
@@ -126,38 +240,46 @@
   </div>
 
   <div class="scene">
-    <!-- Minimal silhouette tree from SVGRepo -->
     <img class="tree" src="tree_owl.png" alt="tree silhouette">
+    <!-- <img class="owl" src="https://cdn.jsdelivr.net/gh/kognise/undraw-illustrations/svg/undraw_sleeping_re_3t3j.svg" alt="sleepy owl"> -->
   </div>
 
   <footer>&copy; 2025 Night Owl Media</footer>
 
   <script>
-    // Generate random stars
+    // Generate stars
     const starsContainer = document.querySelector('.stars');
+    for (let i = 0; i < 150; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
 
-  for (let i = 0; i < 150; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
+      const size = Math.random() * 2 + 1;
+      const opacity = Math.random() * 0.5 + 0.3;
+      const delay = Math.random() * 5;
+      const duration = Math.random() * 3 + 2;
+      const colorTone = `rgba(${200 + Math.random()*55},${200 + Math.random()*55},255,${opacity})`;
 
-    const size = Math.random() * 2 + 1; // 1px to 3px
-    const opacity = Math.random() * 0.5 + 0.3; // 0.3 to 0.8
-    const delay = Math.random() * 5; // 0s to 5s
-    const duration = Math.random() * 3 + 2; // 2s to 5s
-    const colorTone = `rgba(${200 + Math.random()*55},${200 + Math.random()*55},255,${opacity})`;
+      Object.assign(star.style, {
+        top: Math.random() * 100 + '%',
+        left: Math.random() * 100 + '%',
+        width: `${size}px`,
+        height: `${size}px`,
+        background: colorTone,
+        animationDelay: `${delay}s`,
+        animationDuration: `${duration}s`,
+      });
 
-    Object.assign(star.style, {
-      top: Math.random() * 100 + '%',
-      left: Math.random() * 100 + '%',
-      width: `${size}px`,
-      height: `${size}px`,
-      background: colorTone,
-      animationDelay: `${delay}s`,
-      animationDuration: `${duration}s`,
+      starsContainer.appendChild(star);
+    }
+
+    // Theme toggle logic
+    const toggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    toggle.addEventListener('click', () => {
+      const currentTheme = body.getAttribute('data-theme');
+      body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
     });
-
-    starsContainer.appendChild(star);
-  }
   </script>
 </body>
 </html>
